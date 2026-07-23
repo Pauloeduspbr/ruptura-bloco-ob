@@ -2,6 +2,8 @@
 
 Porte C++/MQL5 de um indicador técnico de price action / estrutura de mercado (market structure), para uso no MetaTrader 5.
 
+**🇧🇷 Português** · [🇺🇸 English](#english)
+
 ![Ruptura & Bloco](screenshot.png)
 
 ## O que é
@@ -42,3 +44,48 @@ Este repositório é licenciado sob MPL-2.0. A lógica original em Pine Script �
 ## Aviso
 
 Uso educacional e de análise técnica. Não constitui recomendação de investimento.
+
+---
+
+## English
+
+C++/MQL5 port of a price action / market structure technical indicator for MetaTrader 5.
+
+### What it is
+
+This project is a port of the Pine Script indicator "Market Structure Break & Order Block", authored by EmreKb, originally published on TradingView. The logic was reimplemented from scratch in C++ (calculation engine, compiled as a DLL) and MQL5 (native MetaTrader 5 indicator), with no dependency on the Pine runtime.
+
+The calculation starts from a ZigZag with a configurable length (`zigzag_len`) to identify alternating price highs and lows. From these legs, the indicator detects a Market Structure Break (MSB):
+
+- **Bearish MSB**: price breaks a prior high and then forms lower lows.
+- **Bullish MSB**: price breaks a prior low and then forms higher highs.
+
+Breakout confirmation uses a Fibonacci factor (`fib_factor`): a new high (or low) is only considered a valid breakout if it moves past the `1 + fib_factor` level (or the equivalent on the low side) computed over the ZigZag's prior leg.
+
+After identifying the MSB, the indicator plots the corresponding Order Block (OB) as a box on the chart:
+
+- On a bearish MSB, the OB is the last bullish candle before the high that triggered the breakout.
+- On a bullish MSB, the OB is the last bearish candle before the low that triggered the breakout.
+
+Old or already-broken boxes can be removed automatically (`delete_boxes`), there are separate color/border/text inputs for bullish and bearish OBs, and the ZigZag line display can be toggled on or off.
+
+### Installation — precompiled version
+
+1. Copy `msb_orderblock.dll` into your MetaTrader 5 terminal's `MQL5/Libraries` folder.
+2. Copy `TV_13_MSB_OrderBlock.ex5` into the same terminal's `MQL5/Indicators` folder.
+3. Restart MetaTrader 5 (or right-click "Indicators" in the Navigator and choose "Refresh").
+4. Drag the `TV_13_MSB_OrderBlock` indicator from the Navigator onto the chart.
+
+### Build from source
+
+1. Compile the C++ engine (`msb_orderblock`) with g++/MinGW-w64, using the `build.sh` script included in `src/cpp/` — this produces the `.dll`.
+2. Open `src/mql5/TV_13_MSB_OrderBlock.mq5` in MetaTrader 5's MetaEditor.
+3. Compile with F7 to produce the `.ex5`.
+
+### License
+
+This repository is licensed under MPL-2.0. The original Pine Script logic was authored by EmreKb.
+
+### Disclaimer
+
+Educational and technical-analysis use only. Not investment advice.
