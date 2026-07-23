@@ -51,6 +51,8 @@ Uso educacional e de análise técnica. Não constitui recomendação de investi
 
 C++/MQL5 port of a price action / market structure technical indicator for MetaTrader 5.
 
+![Ruptura & Bloco](screenshot.png)
+
 ### What it is
 
 This project is a port of the Pine Script indicator "Market Structure Break & Order Block", authored by EmreKb, originally published on TradingView. The logic was reimplemented from scratch in C++ (calculation engine, compiled as a DLL) and MQL5 (native MetaTrader 5 indicator), with no dependency on the Pine runtime.
